@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday & Valentine's Day 💖</title>
+  <style>
+    /* ========== Reset & Base ========== */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(160deg, #1a0a0f 0%, #2d1b2e 40%, #1a0a14 100%);
+      color: #fff;
+      overflow-x: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    /* ========== Screen Container ========== */
+    .screen {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      min-height: 80vh;
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 1.5rem;
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    .screen.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ========== Screen 1: Birthday ========== */
+    #screen1 {
+      position: relative;
+    }
+
+    .birthday-title {
+      font-size: clamp(1.8rem, 6vw, 2.5rem);
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
+      color: #ffb6c1;
+    }
+
+    .birthday-date {
+      font-size: 1rem;
+      opacity: 0.9;
+      margin-bottom: 1.5rem;
+    }
+
+    .typewriter-box {
+      min-height: 4rem;
+      margin: 1rem 0 1.5rem;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #ffd1dc;
+    }
+
+    .typewriter-box .cursor {
+      animation: blink 0.8s step-end infinite;
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0;
+      }
+    }
+
+    /* Balloons container */
+    .balloons {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .balloon {
+      position: absolute;
+      width: 40px;
+      height: 50px;
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      bottom: -60px;
+      animation: floatUp 8s ease-in infinite;
+      opacity: 0.9;
+    }
+
+    .balloon::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 12px;
+      background: rgba(255, 255, 255, 0.4);
+      border-radius: 0 0 2px 2px;
+    }
+
+    .balloon:nth-child(1) {
+      left: 10%;
+      background: #ff6b9d;
+      animation-delay: 0s;
+      animation-duration: 7s;
+    }
+
+    .balloon:nth-child(2) {
+      left: 25%;
+      background: #c44569;
+      animation-delay: 1s;
+      animation-duration: 8.5s;
+    }
+
+    .balloon:nth-child(3) {
+      left: 45%;
+      background: #ff8fab;
+      animation-delay: 0.5s;
+      animation-duration: 7.5s;
+    }
+
+    .balloon:nth-child(4) {
+      left: 65%;
+      background: #ffb6c1;
+      animation-delay: 1.5s;
+      animation-duration: 8s;
+    }
+
+    .balloon:nth-child(5) {
+      left: 80%;
+      background: #e75480;
+      animation-delay: 0.8s;
+      animation-duration: 7.2s;
+    }
+
+    .balloon:nth-child(6) {
+      left: 35%;
+      background: #ff69b4;
+      animation-delay: 2s;
+      animation-duration: 9s;
+    }
+
+    .balloon:nth-child(7) {
+      left: 55%;
+      background: #db7093;
+      animation-delay: 1.2s;
+      animation-duration: 7.8s;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) translateX(0);
+        opacity: 0.9;
+      }
+
+      100% {
+        transform: translateY(-120vh) translateX(15px);
+        opacity: 0.3;
+      }
+    }
+
+    /* Confetti (screen 1 subtle) */
+    .confetti-layer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .confetti-piece {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 1px;
+      top: -10px;
+      animation: confettiFall 4s linear infinite;
+    }
+
+    .confetti-piece.square {
+      border-radius: 0;
+    }
+
+    .confetti-piece.circle {
+      border-radius: 50%;
+    }
+
+    @keyframes confettiFall {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0.6;
+      }
+    }
+
+    /* ========== Buttons (shared) ========== */
+    .btn {
+      padding: 0.85rem 1.8rem;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      font-weight: 600;
+      z-index: 10;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 24px rgba(255, 105, 180, 0.4);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #ff6b9d, #c44569);
+      color: #fff;
+      margin-top: 1rem;
+    }
+
+    .btn-yes,
+    .btn-no {
+      width: 11rem;
+      height: 3.25rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-yes {
+      background: linear-gradient(135deg, #ff6b9d, #e75480);
+      color: #fff;
+      transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease, font-size 0.3s ease, padding 0.3s ease;
+    }
+
+    .btn-no {
+      background: linear-gradient(135deg, #555, #333);
+      color: #ccc;
+      position: fixed;
+      z-index: 8;
+      transition: left 0.2s ease-out, top 0.2s ease-out;
+    }
+
+    #btnNo[aria-hidden="true"] {
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    /* ========== Screen 2 ========== */
+    .question-prefix {
+      font-size: clamp(1.2rem, 4vw, 1.5rem);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      color: #ffd1dc;
+    }
+
+    .dramatic-dots::after {
+      content: '';
+      animation: dots 1.5s steps(4, end) infinite;
+    }
+
+    @keyframes dots {
+
+      0%,
+      20% {
+        content: '';
+      }
+
+      40% {
+        content: '.';
+      }
+
+      60% {
+        content: '..';
+      }
+
+      80%,
+      100% {
+        content: '...';
+      }
+    }
+
+    /* ========== Screen 3: Valentine ask ========== */
+    #screen3 {
+      position: relative;
+      justify-content: center;
+    }
+
+    .screen3-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      text-align: center;
+    }
+
+    .valentine-question {
+      font-size: clamp(1.4rem, 5vw, 1.8rem);
+      font-weight: 600;
+      margin: 0 auto 2rem;
+      color: #ffb6c1;
+      position: relative;
+      z-index: 12;
+    }
+
+    .buttons-wrap {
+      position: relative;
+      width: 100%;
+      min-height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-yes-wrap {
+      position: relative;
+      z-index: 15;
+    }
+
+    /* ========== Screen 4: Success ========== */
+    .success-emoji {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      animation: pulse 1s ease-in-out infinite alternate;
+    }
+
+    @keyframes pulse {
+      from {
+        transform: scale(1);
+      }
+
+      to {
+        transform: scale(1.1);
+      }
+    }
+
+    .success-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #ffb6c1;
+      margin-bottom: 1rem;
+    }
+
+    .success-message {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: #ffd1dc;
+      max-width: 360px;
+    }
+
+    /* Confetti burst (screen 4) */
+    .confetti-burst .confetti-piece {
+      animation: burstOut 2s ease-out forwards;
+      top: 50%;
+      left: 50%;
+    }
+
+    @keyframes burstOut {
+      0% {
+        transform: translate(-50%, -50%) scale(0) rotate(0deg);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translate(var(--tx), var(--ty)) scale(1) rotate(720deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Confetti layer (screen 1) -->
+  <div class="confetti-layer" id="confettiLayer1" aria-hidden="true"></div>
+
+  <!-- Balloons -->
+  <div class="balloons" aria-hidden="true">
+    <div class="balloon"></div>
+    <div class="balloon"></div>
+    <div class="balloon"></div>
+    <div class="balloon"></div>
+    <div class="balloon"></div>
+    <div class="balloon"></div>
+    <div class="balloon"></div>
+  </div>
+
+  <!-- Screen 1: Birthday -->
+  <section class="screen active" id="screen1">
+    <h1 class="birthday-title">Happy Birthday!</h1>
+    <p class="birthday-date">February 6th 💕</p>
+    <div class="typewriter-box" id="typewriterBox">
+      <span id="typewriterText"></span><span class="cursor">|</span>
+    </div>
+    <button class="btn btn-primary" id="btnContinue">Continue 👀</button>
+  </section>
+
+  <!-- Screen 2: Question tease -->
+  <section class="screen" id="screen2">
+    <p class="question-prefix dramatic-dots" id="questionText">I have one veryyyy important question...</p>
+    <button class="btn btn-primary" id="btnTellMe">Ok tell me</button>
+  </section>
+
+  <!-- Screen 3: Valentine ask -->
+  <section class="screen" id="screen3">
+    <div class="screen3-content">
+      <p class="valentine-question">Will you be my Valentine?</p>
+      <div class="buttons-wrap">
+        <div class="btn-yes-wrap">
+          <button class="btn btn-yes" id="btnYes">Yes 💖</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <button class="btn btn-no" id="btnNo" aria-hidden="true">No 😐</button>
+
+  <!-- Screen 4: Success -->
+  <section class="screen" id="screen4">
+    <div class="confetti-layer" id="confettiBurst" aria-hidden="true"></div>
+    <div class="success-emoji">💖</div>
+    <h2 class="success-title">Yay! You said yes!</h2>
+    <p class="success-message">
+      Best birthday + Valentine's combo ever. You're stuck with me now — and I wouldn't have it any other way. Love you!
+      😌💕
+    </p>
+  </section>
+
+  <script>
+    // ---------- Config ----------
+    const TYPEWRITER_MSG = "You're the best thing that happened to me. So glad you were born!";
+    const TYPEWRITER_SPEED_MS = 70;
+    const YES_BUTTON_TEXTS = [
+      "Yes 💖",
+      "YES 😌",
+      "THIS ONE ⬅️",
+      "Obviously yes",
+      "Yes please 💕",
+      "Always yes",
+      "100% yes",
+      "The only answer 💖"
+    ];
+    const NO_BUTTON_TEXTS = [
+      "No 😐",
+      "Really?...",
+      "Are you kidding...",
+      "Nope 🙄",
+      "As if 😒",
+      "It's what Rachel would want you to do"
+      "Nice try...",
+      "Seriously?",
+      "You wish 😏",
+      "Not a chance",
+      "Obviously no",
+      "Still no 🤷",
+      "Try again...",
+      "Nah 😤",
+      "The audacity..."
+    ];
+    const YES_GROWTH_FACTOR = 1.3;
+    const YES_MAX_SCALE = 6.5;
+    const YES_ZONE_PADDING_PX = 30;
+    const MAX_POSITION_ATTEMPTS = 40;
+    const CONFETTI_COLORS = ['#ff6b9d', '#ffb6c1', '#c44569', '#ff8fab', '#e75480', '#ffd1dc', '#fff'];
+
+    // ---------- DOM refs ----------
+    const screens = document.querySelectorAll('.screen');
+    const typewriterEl = document.getElementById('typewriterText');
+    const btnContinue = document.getElementById('btnContinue');
+    const btnTellMe = document.getElementById('btnTellMe');
+    const btnYes = document.getElementById('btnYes');
+    const btnNo = document.getElementById('btnNo');
+    const confettiLayer1 = document.getElementById('confettiLayer1');
+    const confettiBurst = document.getElementById('confettiBurst');
+
+    let yesClickCount = 0;
+    let noMessageIndex = 0;
+    let noButtonRect = () => btnNo.getBoundingClientRect();
+
+    // ---------- Helpers ----------
+    function showScreen(id) {
+      screens.forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      if (id !== 'screen3') btnNo.setAttribute('aria-hidden', 'true');
+    }
+
+    function rand(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    function clamp(val, min, max) {
+      return Math.max(min, Math.min(max, val));
+    }
+
+    // ---------- Screen 1: Typewriter ----------
+    function runTypewriter() {
+      let i = 0;
+      typewriterEl.textContent = '';
+      function tick() {
+        if (i < TYPEWRITER_MSG.length) {
+          typewriterEl.textContent += TYPEWRITER_MSG[i];
+          i++;
+          setTimeout(tick, TYPEWRITER_SPEED_MS);
+        }
+      }
+      tick();
+    }
+
+    // Confetti for screen 1 (subtle falling)
+    function initScreen1Confetti() {
+      const count = 25;
+      for (let i = 0; i < count; i++) {
+        const p = document.createElement('div');
+        p.className = 'confetti-piece ' + (Math.random() > 0.5 ? 'circle' : 'square');
+        p.style.left = rand(0, 100) + '%';
+        p.style.background = CONFETTI_COLORS[Math.floor(rand(0, CONFETTI_COLORS.length))];
+        p.style.animationDelay = rand(0, 2) + 's';
+        p.style.animationDuration = (3 + rand(0, 2)) + 's';
+        confettiLayer1.appendChild(p);
+      }
+    }
+    initScreen1Confetti();
+    runTypewriter();
+
+    btnContinue.addEventListener('click', () => showScreen('screen2'));
+
+    // ---------- Screen 2 ----------
+    btnTellMe.addEventListener('click', () => {
+      showScreen('screen3');
+      yesClickCount = 0;
+      noMessageIndex = 0;
+      btnYes.style.transform = 'scale(1)';
+      btnYes.textContent = YES_BUTTON_TEXTS[0];
+      btnNo.setAttribute('aria-hidden', 'true');
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          placeNoButtonNextToYes();
+          noMessageIndex = 1;
+          btnNo.setAttribute('aria-hidden', 'false');
+        });
+      });
+    });
+
+    // ---------- Screen 3: No dodges cursor + Yes grows ----------
+    const NO_NEXT_TO_YES_GAP = 12;
+    function placeNoButtonNextToYes() {
+      const yesRect = btnYes.getBoundingClientRect();
+      const btnW = btnNo.offsetWidth;
+      const btnH = btnNo.offsetHeight;
+      const vw = window.innerWidth;
+      const top = yesRect.top + (yesRect.height - btnH) / 2;
+      let left;
+      if (yesRect.right + NO_NEXT_TO_YES_GAP + btnW <= vw) {
+        left = yesRect.right + NO_NEXT_TO_YES_GAP;
+      } else {
+        left = yesRect.left - btnW - NO_NEXT_TO_YES_GAP;
+      }
+      btnNo.style.left = Math.max(0, left) + 'px';
+      btnNo.style.top = Math.max(0, top) + 'px';
+      btnNo.textContent = NO_BUTTON_TEXTS[0];
+    }
+
+    // Pick a random viewport position that does NOT overlap the Yes button (so messages stay visible).
+    function getSafePosition() {
+      const btnW = btnNo.offsetWidth;
+      const btnH = btnNo.offsetHeight;
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const pad = YES_ZONE_PADDING_PX;
+      const yesRect = btnYes.getBoundingClientRect();
+      const yesLeft = yesRect.left - pad;
+      const yesTop = yesRect.top - pad;
+      const yesRight = yesRect.right + pad;
+      const yesBottom = yesRect.bottom + pad;
+
+      function overlapsNo(x, y) {
+        const noLeft = x;
+        const noTop = y;
+        const noRight = x + btnW;
+        const noBottom = y + btnH;
+        return noRight > yesLeft && noLeft < yesRight && noBottom > yesTop && noTop < yesBottom;
+      }
+
+      for (let attempt = 0; attempt < MAX_POSITION_ATTEMPTS; attempt++) {
+        const x = rand(0, Math.max(0, vw - btnW));
+        const y = rand(0, Math.max(0, vh - btnH));
+        if (!overlapsNo(x, y)) return { x, y };
+      }
+      // Fallback: place far from center (Yes is usually near center)
+      const x = rand(0, 1) < 0.5 ? rand(0, vw * 0.2) : rand(vw * 0.8 - btnW, vw - btnW);
+      const y = rand(0, 1) < 0.5 ? rand(0, vh * 0.3) : rand(vh * 0.7 - btnH, vh - btnH);
+      return { x, y };
+    }
+
+    function moveNoButton() {
+      const { x, y } = getSafePosition();
+      btnNo.style.left = x + 'px';
+      btnNo.style.top = y + 'px';
+      btnNo.textContent = NO_BUTTON_TEXTS[noMessageIndex % NO_BUTTON_TEXTS.length];
+      noMessageIndex++;
+    }
+
+    // No button uses fixed positioning (viewport); initial position set when screen 3 is shown.
+
+    // Dodge cursor/touch: when pointer gets close, move No button
+    let dodgeCooldown = false;
+    const DODGE_RADIUS = 80;
+    function checkDodge(clientX, clientY) {
+      if (!document.getElementById('screen3').classList.contains('active')) return;
+      if (dodgeCooldown) return;
+      const r = noButtonRect();
+      const cx = r.left + r.width / 2;
+      const cy = r.top + r.height / 2;
+      const dist = Math.hypot(clientX - cx, clientY - cy);
+      if (dist < DODGE_RADIUS) {
+        dodgeCooldown = true;
+        moveNoButton();
+        // Each dodge = user tried to get the No button, so grow Yes and update its message
+        yesClickCount++;
+        const scale = Math.min(YES_MAX_SCALE, Math.pow(YES_GROWTH_FACTOR, yesClickCount));
+        btnYes.style.transform = `scale(${scale})`;
+        const textIndex = Math.min(yesClickCount, YES_BUTTON_TEXTS.length - 1);
+        btnYes.textContent = YES_BUTTON_TEXTS[textIndex];
+        setTimeout(() => { dodgeCooldown = false; }, 300);
+      }
+    }
+    document.addEventListener('mousemove', (e) => checkDodge(e.clientX, e.clientY));
+    document.addEventListener('touchmove', (e) => {
+      if (e.touches.length) checkDodge(e.touches[0].clientX, e.touches[0].clientY);
+    }, { passive: true });
+
+    btnNo.addEventListener('click', (e) => {
+      e.preventDefault();
+      moveNoButton();
+      // No growth/message change on click — only on dodge (user trying to reach No)
+    });
+
+    btnYes.addEventListener('click', () => {
+      showScreen('screen4');
+      triggerConfettiBurst();
+    });
+
+    // ---------- Screen 4: Confetti burst ----------
+    function triggerConfettiBurst() {
+      confettiBurst.innerHTML = '';
+      confettiBurst.classList.add('confetti-burst');
+      const count = 80;
+      for (let i = 0; i < count; i++) {
+        const p = document.createElement('div');
+        p.className = 'confetti-piece ' + (Math.random() > 0.5 ? 'circle' : 'square');
+        const angle = rand(0, Math.PI * 2);
+        const dist = rand(150, 400);
+        const tx = Math.cos(angle) * dist + 'px';
+        const ty = Math.sin(angle) * dist + 'px';
+        p.style.setProperty('--tx', tx);
+        p.style.setProperty('--ty', ty);
+        p.style.background = CONFETTI_COLORS[Math.floor(rand(0, CONFETTI_COLORS.length))];
+        p.style.animationDelay = rand(0, 0.3) + 's';
+        p.style.animationDuration = (1.5 + rand(0, 0.5)) + 's';
+        confettiBurst.appendChild(p);
+      }
+      setTimeout(() => {
+        confettiBurst.classList.remove('confetti-burst');
+        confettiBurst.innerHTML = '';
+      }, 2500);
+    }
+  </script>
+</body>
+
+</html>
